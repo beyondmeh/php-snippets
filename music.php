@@ -1,6 +1,5 @@
 #!/usr/bin/php -q
 <?php
-<?php
 /**
  * PHP shell script to play music
  * 
