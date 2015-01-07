@@ -2,11 +2,10 @@
 /**
  * img_crypt.php
  *
- * Binary Encryption to a Image
+ * Encoding a Message into a Image
  *
- * Converts plain text into a innocuous looking pixelated image. Each
- * pixel, depending on the color, represents a binary bit of the encoded
- * message.
+ * Converts plain text into a pixelated image with each pixel representing
+ * the binary value of each ascii character in the message.
  *
  * Copyright (C) 2014 Timothy Keith <timothy@keithieopia.com>
  *
@@ -30,17 +29,17 @@
  */
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'Encrypt') {
+    if ($_POST['action'] == 'Encode') {
         $message = trim($_POST['message']);
         $encimg = bin2pix(txt2bin($message));
         $encimg = 'data:image/png;base64,' . base64_encode(file_get_contents($encimg));
     }
-    else { // Decrypt
+    else { // Decode
         if (isset($_FILES['encimg']['tmp_name']) && $_FILES['encimg']['tmp_name'] != ''){
             $message = bin2txt(pix2bin($_FILES['encimg']['tmp_name']));
         }
         else {
-            trigger_error('No image was provided to decrypt!' , E_USER_ERROR);
+            trigger_error('No image was provided to decode!' , E_USER_ERROR);
         }
     }
 }
@@ -141,13 +140,13 @@ function pix2bin($image){
 
 <html>
     <body>
-        <h1>Binary Encryption to Image</h1>
-        <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="timcrypt">
+        <h1>Encode a Message into a Image</h1>
+        <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <table>
 
             <?php if (isset($encimg)) { ?>
                 <tr>
-                    <td><strong>Encrypted<br>Image</strong></td>
+                    <td><strong>Encoded<br>Image</strong></td>
                     <td>
                         <img src="<?php echo $encimg; ?>" style="width: 200px; height: 200px">
                     </td>
@@ -156,23 +155,21 @@ function pix2bin($image){
 
                 <tr>
                     <td>
-                        <strong>Secret<br>Message</strong>
+                        <strong>Plain<br>Text</strong>
                     </td><td>
                         <textarea rows="15" cols="50" name="message" WRAP="SOFT"><?php if (isset($message)) echo $message; ?></textarea>
                     </td>
                 </tr><tr>
                     <td>
-                        <strong>Image Upload</strong><br>
-                        <em>To Decrypt</em>
+                        <strong>Image<br>Upload</strong>
                     </td><td>
                         <input name="encimg" type="file" size="50" class="button">
                     </td>
                 </tr><tr>
                     <td colspan="2">
                         <center>
-                            <input type="submit" name="action" value="Encrypt" class="button">
-                            <input type="reset" value="Clear All" class="button">
-                            <input type="submit" name="action" value="Decrypt" class="button">
+                            <input type="submit" name="action" value="Encode" class="button">
+                            <input type="submit" name="action" value="Decode" class="button">
                         </center>
                     </td>
                 </tr>
@@ -180,18 +177,18 @@ function pix2bin($image){
         </form>
         <br><br>
 
-        <h2>Encryption</h2>
+        <h2>Encode</h2>
         <p>
-        Type a message then click the <em>Encrypt</em> button. The the given message is converted into binary, then the binary
-        is transformed into an image with each pixel representing a 0 or 1. Note that the image size will increase
-        with the message length, however for display purposes the image is always scaled to a 200px square.
+        Type a message then click the <em>Encode</em> button. The the given message is converted into binary, then
+        the binary is transformed into an image with each pixel representing a 0 or 1. Note that the image size will
+        increase with the message length, however for display purposes the image is always scaled to a 200px square.
         </p>
 
-        <h2>Decryption</h2>
+        <h2>Decode</h2>
         <p>
-        Click the <em>Choose File</em> button and upload an encrypted image created with this script. Then click the
-        <em>Decrypt</em> button. The image will be decrypted (decryption is simply the above encryption in reverse) and
-        the secret message will be outputted to the <em>Secret Message</em> text field.
+        Click the <em>Choose File</em> button and upload an encoded image created with this script. Then click the
+        <em>Decrypt</em> button. The image will be decoded (decoding is simply the above encoding in reverse) and
+        message will be outputted to the <em>Plain Text</em> text field.
         </p>
     </body>
 </html>
