@@ -1,7 +1,7 @@
 <?php
 <?php
 /**
- * caesar.crypt.php
+ * caesar.php
  *
  * PHP implementation of a shift cipher
  *
