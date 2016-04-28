@@ -39,7 +39,9 @@ only officially added in Deadfish~
 ##### Sample programs:
 
 ###### Running the interactive CLI:
-```php deadfish.php  
+
+```
+php deadfish.php  
 >> iiiio  
 4  
 >> d  
@@ -47,7 +49,8 @@ only officially added in Deadfish~
 ```
 
 ###### Passing a command string directly:
-```php deadfish.php iisiiiis{ic}{ic}icicicicicic
+```
+php deadfish.php iisiiiis{ic}{ic}icicicicicic
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ```
 
