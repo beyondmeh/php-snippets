@@ -2,16 +2,16 @@
 <?php
 /**
  * PHP shell script to play morse code through the speaker
- * 
- * Run this script from the command line and pass a message in quotes as 
- * an arguement to have it convert it to morse code and play it through 
+ *
+ * Run this script from the command line and pass a message in quotes as
+ * an arguement to have it convert it to morse code and play it through
  * the speakers.
- * 
+ *
  * If you simply want a script to convert a character to morse code look
  * at the function char2morse() and loop each character of a string to it.
  * However, most times we need to run the morse() function instead so that
  * the gaps between letters and words are generated.
- */ 
+ */
 
 if (php_sapi_name() != 'cli' || isset($_SERVER['REMOTE_ADDR'])) {
     die('<b>Error:</b> This script is a shell script and is ment to be run from the command prompt.');
@@ -39,23 +39,23 @@ function char2morse($char){
                   ':' => '---...', ';' => '-.-.-.','=' => '-...-',  '+' => '.-.-.',
                   '-' => '-....-', '_' => '..--.-','"' => '.-..-.', '$' => '...-..-',
                   '@' => '.--.-.');
-    
+
     $char = strtoupper($char);
-    
+
     if (array_key_exists($char, $code)) {
         return $code[$char]; 
     }
     else {
         return '';
     }
-}           
+}
 
 function morse($message){
     $unit = 50;
-    
+
     $words = explode(' ', $message);
     $word = 0;
-    
+
     $encoded = NULL;
 
     echo $words[$word] .': ';
@@ -67,24 +67,24 @@ function morse($message){
         }
         else {
             $morse = char2morse($message{$i});
-                
+
             for ($m = 0; $m < strlen($morse); $m++) {
                 if ($morse{$m} == '.'){
-                    echo '.'; 
+                    echo '.';
                     beep(440, $unit); // short mark, dot or 'dit' (·) — 'dot duration' is one unit long
                 }
-                else { 
+                else {
                     echo '-';
                     beep(440, ($unit * 3)); // longer mark, dash or 'dah' (–) — three units long
                 }
                 beep(0, $unit); // inter-element gap between the dots and dashes within a character — one dot duration or one unit long
             }
-            
+
             echo ' ';
             beep(0, ($unit * 3)); // short gap (between letters) — three units long
         }
     }
-    
+
     echo "\nSTOP\n";
     beep(440, $unit);
     beep(440, ($unit * 3));
@@ -99,10 +99,10 @@ function beep($frequency, $duration){
     $samplerate = 8000;
 
     $fp = fopen('/dev/dsp', 'w');
-    
+
     for($i = 0; $i < ($duration * $samplerate); $i++) {
         $x = 128 + $amplitude * sin($i / $samplerate * $frequency * (2 * pi()));
-        
+
         $x = chr($x);
         fwrite($fp, $x);
     }
