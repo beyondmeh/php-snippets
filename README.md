@@ -1,20 +1,43 @@
-# snippets
+# php-snippets
 *Fun programming exercises for entertainment*
 
-
-## Synopsis
 These are various PHP scripts I have written over the years for my sole enjoyment.
 
+## Scripts:
 
-### Scripts:
+* [base58.php](#base58)
+* [bofh.php](#bofh)
+* [deadfish.php](#deadfish)
+* crypto/
+    * [ceaser.php](#ceaser)
+    * [keyed_fibonacci.php](#fibonacci)
+    * [oauth.php](#oauth)
+    * [vigenere.php](#vigenere)
+* [genprimes.php](#genprimes)
+* [greeting.php](#greeting)
+* images/
+    * [img2html.php](#img2html)
+    * [txt2img.php](#txt2img)
+* [morse.php](#morse)
+* [music.php](#music)
+* [reddit-rss.php](#reddit-rss)
 
-#### `bofh.php`
+
+## Script Descriptions
+
+### `base58.php`
+<a name="base58"></a>
+Functions to [Base58](https://en.wikipedia.org/wiki/Base58) large integers into
+a string that excludes similar looking characters (O, 0, 1, l, etc). The
+conversion alphabet is the same used in [Bitcoin](https://en.bitcoin.it/wiki/Base58Check_encoding).
+
+### `bofh.php`
+<a name="bofh"></a>
 Generates a random [Bastard Operator from Hell](https://en.wikipedia.org/wiki/Bastard_Operator_From_Hell)
 calendar excuse. Probably the most useful and applicable script you will ever find.
 
-
-#### `deadfish.php`
-
+### `deadfish.php`
+<a name="deadfish"></a>
 Deadfish is a joke programming language I found on the
 [esoteric programming language wiki](http://www.esolangs.org/). After quickly
 writing an interpreter for it in PHP, I set out to implement [Deadfish~](http://esolangs.org/wiki/Deadfish%7E),
@@ -39,7 +62,6 @@ only officially added in Deadfish~
 ##### Sample programs:
 
 ###### Running the interactive CLI:
-
 ```
 php deadfish.php  
 >> iiiio  
@@ -54,73 +76,52 @@ php deadfish.php iisiiiis{ic}{ic}icicicicicic
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ```
 
-
-#### `crypto/ceaser.php`
+### `ceaser.php`
+<a name="ceaser"></a>
 A PHP implementation of a shift cipher, which is what the classic Caesar and ROT13
 ciphers are. This script doesn't rotate the characters using their ASCII values,
 so it's compatible with the standard pen and paper method. At the same time that
 means non *A-Z* characters are ignored.
 
-
-#### `crypto/keyed_fibonacci.php`
-*A [Polyalphabetic Cipher](https://en.wikipedia.org/wiki/Polyalphabetic_cipher)
-using a [lagged Fibonacci generator](https://en.wikipedia.org/wiki/Lagged_Fibonacci_generator).*
-
-A lagged Fibonacci generator is seeded with a given password, which in turn is
-used to generate a number for each letter of the message. That number is then used
-to rotate each letter of the message.
-
-For a type of Polyalphabetic Cipher, this method is more secure than the other
-algorithms, with the lagged generator defeating frequency analysis. The length of
-the password directly effects the cipher's complexity.
-
-
-#### `crypto/oauth.php`
-Example of a [TOTP](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm)
-implementation in PHP, which could be used for OAUTH or two-factor authentication.
-
-
-#### `crypto/vigenere.php`
-*An implementation of a [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)*
-
-This is a pen and paper compatible version of the Vigenère cipher, therefore non
-*A-Z* characters are ignored. Per the original, the password is repeated until
-it's length matches the message length, so a longer password is more secure.
-
-A Vigenère square / tabula recta is not needed, as the encoding is done on the fly.
-
-
-#### `genprimes.php`
+### `genprimes.php`
+<a name="genprimes"></a>
 Efficiently, *as one can using PHP*, generate prime numbers with the ability to
 start where you left off last run.
 
-
-#### `greeting.php`
+### `greeting.php`
+<a name="greeting"></a>
 Using [eSpeak](http://espeak.sourceforge.net/), say an appropriate greeting for
 the current time with a random saying from the movie [WarGames](http://www.imdb.com/title/tt0086567/).
 Good for impressing others when set to run at startup.
 
-
-#### `images/img2html.php`
+### `img2html.php`
+<a name="img2html"></a>
 A proof of concept to convert an image into a HTML table with colored cells as
 the pixels. Note this is super slow and tends to freeze the browser until the
 table is completely rendered.
 
+### `keyed_fibonacci.php`
+<a name="fibonacci"></a>
+A [Polyalphabetic Cipher](https://en.wikipedia.org/wiki/Polyalphabetic_cipher)
+using a [lagged Fibonacci generator](https://en.wikipedia.org/wiki/Lagged_Fibonacci_generator).
+The generator is seeded with a given password, which in turn is used to generate
+a number for each letter of the message. That number is then used to rotate each
+letter of the message.
 
-#### `images/txt2img.php`
-Converts plain text into a pixelated image with each pixel representing the binary
-value of each ASCII character in the message.
+For a pen and paper cipher, this method is more secure than the other ciphers,
+with the lagged generator defeating frequency analysis. The length of the password
+directly effects the cipher's complexity.
 
-
-#### `morse.php`
+### `morse.php`
+<a name="morse"></a>
 Plays morse code through the speaker, taking a message to convert in quotes as an
 argument.
 
 If you simply want a script to convert a character to morse code, look at the
 function `char2morse()` and loop each character of a string to it.
 
-
-#### `music.php`
+### `music.php`
+<a name="music"></a>
 Pass a preset song title as an argument to have it played through the speakers
 entirely using PHP (no other programs are used). The "music" is nothing more
 than a string of frequencies and durations.
@@ -129,7 +130,7 @@ than a string of frequencies and durations.
 For example, A would be -2 and F would be 5. You can go up and down multiple
 octaves too... just add or subtract 8 from the note you want.
 
-##### Usage:
+#### Usage:
 * `music.php scale` - Plays a musical scale
 * `music.php gentlemen` - "God Rest Ye Merry Gentlemen", a Christmas carol
 * `music.php deckhalls` - "Deck the Halls" a Christmas carol    
@@ -144,14 +145,34 @@ octaves too... just add or subtract 8 from the note you want.
 * `music.php mario` - Underwater theme from the game, "Super Mario Bros"
 * `music.php stillalive` - "Still Alive" from the game, "Portal"
 
+### `oauth.php`
+<a name="oauth"></a>
+Example of a [TOTP](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm)
+implementation in PHP, which could be used for OAUTH or two-factor authentication.
 
-#### `reddit-rss.php`
+### `reddit-rss.php`
+<a name="reddit-rss"></a>
 Parses a [Reddit](http://reddit.com) RSS feed and returns an array with the title,
 link, and content teaser for every entry in the feed. Also includes a function to
 convert said array into a HTML list.
 
 *I was going to do something more with this, but I lost interest... maybe it will
 be of use to someone else.*
+
+### `txt2img.php`
+<a name="txt2img"></a>
+Converts plain text into a pixelated image with each pixel representing the binary
+value of each ASCII character in the message.
+
+### `vigenere.php`
+<a name="vigenere"></a>
+*An implementation of a [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)*
+
+This is a pen and paper compatible version of the Vigenère cipher, therefore non
+*A-Z* characters are ignored. Per the original, the password is repeated until
+it's length matches the message length, so a longer password is more secure.
+
+A Vigenère square / tabula recta is not needed, as the encoding is done on the fly.
 
 
 ## Usage
