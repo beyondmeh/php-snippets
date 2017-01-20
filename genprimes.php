@@ -1,7 +1,8 @@
+#!/usr/bin/php
 <?php
 	$file = 'primes.txt';
 	$places = 10;
-	
+
 	$goal = str_pad(1, $places, '0');
 
 	if (file_exists($file)) {
@@ -46,30 +47,25 @@
 		if (isprime($number)){
 			$data[] = $number;
 		}
-		
+
 		$number++;
-		
-		
+
 		if (sizeof($data) > ($benchmark * 3)){ // Dump 30 secs worth of primes
 			$lastfound = end($data);
-			
+
 			$percent   = ($lastfound / $goal * 100);
 			echo ' -> Dumping found primes: '. $percent . '% done'."\n";
-			
+
 			$data = implode("\n", $data);
 			$data = $data ."\n";
-			
+
 			$f = fopen($file, 'a');
 			fwrite($f, $data);
 			fclose($f);
-			
-			$data = array();			
+
+			$data = array();
 		}
 	}
-
-
-
-
 
 function format_bytes($size) {
     $units = array(' B', ' KB', ' MB', ' GB', ' TB');
@@ -84,9 +80,9 @@ function isprime($num){
 	for ($i=2; $i <= $max; $i++){
 		if ($num % $i == 0) return FALSE;
 	}
-	
+
 	if ($i == ($max + 1)) return TRUE;
-	
+
 }
 
 
@@ -94,7 +90,7 @@ function flastline($file){
 /* flastline()
  *     Read a huge file's last line without putting it in memory
  *     http://stackoverflow.com/questions/1510141/read-last-line-from-file
- */ 	
+ */
 
 	$line = '';
 
@@ -117,6 +113,6 @@ function flastline($file){
 
 	return $line;
 
-}	
+}
 
 ?>
