@@ -2,23 +2,23 @@
 <?php
 /**
  * PHP shell script to play music
- * 
- * Run this script from the command line and pass a song title as an 
- * arguement to have it play through the speakers. The "music" is nothing 
- * more than a string of frequencies and durations that is parsed as 
- * individual 'beeps'. Beyond the fun proof of concept there are some 
- * useful functions. 
- * 
+ *
+ * Run this script from the command line and pass a song title as an
+ * arguement to have it play through the speakers. The "music" is nothing
+ * more than a string of frequencies and durations that is parsed as
+ * individual 'beeps'. Beyond the fun proof of concept there are some
+ * useful functions.
+ *
  * Beep is much like Microsoft Window's beep() API except it uses Linux's
- * DSP... if you don't have that look for alsa-oss or change the relevant 
- * line to /dev/audio 
- * 
- * note() computes the frequency of a piano key given it's distance from 
+ * DSP... if you don't have that look for alsa-oss or change the relevant
+ * line to /dev/audio
+ *
+ * note() computes the frequency of a piano key given it's distance from
  * middle C. For example, A would be -2 and F would be 5. You
- * can go up and down multiple octaves too... just add or subtract 8 from 
+ * can go up and down multiple octaves too... just add or subtract 8 from
  * the note you want.
- */ 
- 
+ */
+
 if (php_sapi_name() != 'cli' || isset($_SERVER['REMOTE_ADDR'])) {
     die('<b>Error:</b> This script is a shell script and is ment to be run from the command prompt.');
 }
@@ -30,7 +30,7 @@ switch ($_SERVER['argv'][1]){
     case 'scale':
         for ($i = 0; $i < 8; $i++){
             $freq = note(440, $i);
-    
+
             echo $freq . "\n";
             beep($freq, 500);
         }
@@ -76,13 +76,13 @@ switch ($_SERVER['argv'][1]){
             .'Songs:'."\n"
             .'   "scale"       - Play a musical scale'."\n"
             .'   "gentlemen"   - God Rest Ye Merry Gentlemen (Christmas Carol)'."\n"
-            .'   "deckhalls"   - Deck the Halls (Christmas Carol)'."\n"     
+            .'   "deckhalls"   - Deck the Halls (Christmas Carol)'."\n"
             .'   "entertainer" - The Entertainer (Scott Joplin)'."\n"
             .'   "bumblebee"   - Flight of the Bumblebee (Nikolai Rimsky)'."\n"
-            .'   "crazytrain"  - Crazy Train (Ozzy Osbourne)'."\n"  
+            .'   "crazytrain"  - Crazy Train (Ozzy Osbourne)'."\n"
             .'   "movitit"     - I Like to Move It (Reel 2 Real)'."\n"
             .'   "clocks"      - Clocks (Coldplay)'."\n"
-            .'   "empire"      - Imperial March (Movie: Star Wars)'."\n"        
+            .'   "empire"      - Imperial March (Movie: Star Wars)'."\n"
             .'   "pinkpanther" - The Pink Panther Theme (Movie: The Pink Panther)'."\n"
             .'   "ffvictory"   - Victory Theme (Game: Final Fantasy)'."\n"
             .'   "mario"       - Underwater Theme (Game: Super Mario Bros.)'."\n"
@@ -91,10 +91,10 @@ switch ($_SERVER['argv'][1]){
 
 function parseMusicStr($str){
     $tones = explode('|', $str);
-    
+
     foreach ($tones as $tone){
         $part = explode(',', $tone);
-        
+
         if ($part[0] == 'R'){
             usleep($part[1]);
         }
@@ -103,7 +103,7 @@ function parseMusicStr($str){
         }
     }
 }
-                                        
+
 function note($hertz = 440, $notenum){
     return pow(2, ($notenum / 12)) * $hertz;
 }
@@ -114,10 +114,10 @@ function beep($frequency, $duration){
     $samplerate = 8000;
 
     $fp = fopen('/dev/dsp', 'w');
-    
+
     for($i = 0; $i < ($duration * $samplerate); $i++) {
         $x = 128 + $amplitude * sin($i / $samplerate * $frequency * (2 * pi()));
-        
+
         $x = chr($x);
         fwrite($fp, $x);
     }
@@ -126,5 +126,3 @@ function beep($frequency, $duration){
 }
 
 ?>
-
-
