@@ -10,13 +10,11 @@
 	else if (date('G') >= 12)             $greeting = "Good Afternoon";
 	else if (date('G') < 12)              $greeting = "Good Morning";
 
-
-
 	$say = $greeting .' '. $user .', today is '. $today . '. ' . rand_array_element($ending);
-	
+
 	echo $say;
 	exec('espeak "'. $say .'"');
-	
+
 function rand_array_element($array) {
 	$key = array_rand($array, 1);
 	return $array[$key];
