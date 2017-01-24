@@ -94,6 +94,10 @@ Using [eSpeak](http://espeak.sourceforge.net/), say an appropriate greeting for
 the current time with a random saying from the movie [WarGames](http://www.imdb.com/title/tt0086567/).
 Good for impressing others when set to run at startup.
 
+* [bin/wm/greeting](https://github.com/keithieopia/bin/blob/master/wm/greeting) &
+  [bin/say](https://github.com/keithieopia/bin/blob/master/say) is a more sane
+  approach to this using BASH and Pico TTS.
+
 ### `img2html.php`
 <a name="img2html"></a>
 A proof of concept to convert an image into a HTML table with colored cells as
